@@ -41,6 +41,7 @@ namespace WebApi1.Controllers
         //    var book= BookList.Where(x=>x.Id==Convert.ToInt32(id)).SingleOrDefault();
         //    return book;
         //}
+        [HttpPost]
         public IActionResult AddBook([FromBody] Book newBook)
         {
             var book = _context.Books.SingleOrDefault(x => x.Title == newBook.Title);

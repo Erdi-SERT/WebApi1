@@ -53,12 +53,13 @@ namespace WebApi1
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Showing API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1");
+                //c.RoutePrefix = "BookController";
             });
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllers();
-            //});
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
