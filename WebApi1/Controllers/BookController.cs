@@ -19,13 +19,13 @@ namespace WebApi1.Controllers
             _context = context;
         }
 
-        //[HttpGet]
-        //public List<Book> GetBooks()
-        //{
+        [HttpGet]
+        public List<Book> GetBooks()
+        {
 
-        //    var booklist = _context.Books.OrderBy(x => x.Id).ToList<Book>();
-        //    return booklist;
-        //}
+            var booklist = _context.Books.OrderBy(x => x.Id).ToList<Book>();
+            return booklist;
+        }
 
 
         [HttpGet("{id}")]
@@ -35,18 +35,13 @@ namespace WebApi1.Controllers
             var book = _context.Books.Where(x => x.Id == id).SingleOrDefault();
             return book;
         }
-        //[HttpGet]
-        //public Book Get([FromQuery]string id)
-        //{
-        //    var book= BookList.Where(x=>x.Id==Convert.ToInt32(id)).SingleOrDefault();
-        //    return book;
-        //}
+      
         [HttpPost]
         public IActionResult AddBook([FromBody] Book newBook)
         {
             var book = _context.Books.SingleOrDefault(x => x.Title == newBook.Title);
 
-            if (book.Id>0 )
+            if (book !=null)
             {
                 return BadRequest();
             }
