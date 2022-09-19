@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WebApi1.BookOperations;
+using WebApi1.BookOperations.CreateBookCommand;
 using WebApi1.DbOperations;
+using static WebApi1.BookOperations.CreateBookCommand.CreateBookCommand;
 
 namespace WebApi1.Controllers
 {
@@ -20,11 +23,11 @@ namespace WebApi1.Controllers
         }
 
         [HttpGet]
-        public List<Book> GetBooks()
+        public IActionResult GetBooks()
         {
-
-            var booklist = _context.Books.OrderBy(x => x.Id).ToList<Book>();
-            return booklist;
+            GetBooksQuery query = new GetBooksQuery(_context);
+            var result=query.Handle();
+            return Ok(result);
         }
 
 
@@ -37,19 +40,20 @@ namespace WebApi1.Controllers
         }
       
         [HttpPost]
-        public IActionResult AddBook([FromBody] Book newBook)
+        public IActionResult AddBook([FromBody] CreateBookModel newBook)
         {
-            var book = _context.Books.SingleOrDefault(x => x.Title == newBook.Title);
-
-            if (book !=null)
+            CreateBookCommand command = new CreateBookCommand(_context);
+            try
             {
-                return BadRequest();
+                
+                command.Model = newBook;
+                command.Handle();
             }
-            else
+            catch (Exception ex)
             {
-                _context.Books.Add(newBook);
-                _context.SaveChanges();
+                return BadRequest(ex.Message);
             }
+          
             return Ok();
         }
 
