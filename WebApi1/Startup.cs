@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using WebApi1.DbOperations;
 
@@ -30,6 +31,8 @@ namespace WebApi1
         {
             services.AddControllers();
             services.AddSwaggerGen();
+            //AutoMapper eklendi
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi", Version = "v1",Description="WebApi implement swagger"});
