@@ -8,6 +8,7 @@ using System.Linq;
 using WebApi1.BookOperations;
 using WebApi1.BookOperations.CreateBookCommand;
 using WebApi1.BookOperations.DeleteBooks;
+using WebApi1.BookOperations.GetBookDetail;
 using WebApi1.BookOperations.GetBooks;
 using WebApi1.BookOperations.UpdateBook;
 using WebApi1.DbOperations;
@@ -47,6 +48,8 @@ namespace WebApi1.Controllers
             {
                 GetBookDetailQuery query = new GetBookDetailQuery(_context, _mapper);
                 query.BookId = id;
+                GetBookCommandValidator validator=new GetBookCommandValidator();
+                validator.ValidateAndThrow(query);
                 result = query.Handle();
 
             }
@@ -102,6 +105,8 @@ namespace WebApi1.Controllers
                 UpdateBookCommand command = new UpdateBookCommand(_context);
                 command.BookId = id;
                 command.Model = updatedBook;
+                UpdateBookCommandValidator validator = new UpdateBookCommandValidator();
+                validator.ValidateAndThrow(command);
                 command.handle();
             }
             catch (Exception ex)
