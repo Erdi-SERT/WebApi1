@@ -14,6 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using WebApi1.DbOperations;
+using WebApi1.Middleweare;
 
 namespace WebApi1
 {
@@ -53,6 +54,8 @@ namespace WebApi1
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCustomExceptionMiddleware();
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {

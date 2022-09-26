@@ -44,20 +44,20 @@ namespace WebApi1.Controllers
         public IActionResult GetByID(int id)
         {
             BookDetailVmModel result = new BookDetailVmModel();
-            try
-            {
+            //try
+            //{
                 GetBookDetailQuery query = new GetBookDetailQuery(_context, _mapper);
                 query.BookId = id;
                 GetBookCommandValidator validator=new GetBookCommandValidator();
                 validator.ValidateAndThrow(query);
                 result = query.Handle();
 
-            }
-            catch (Exception ex)
-            {
+            //}
+            //catch (Exception ex)
+            //{
 
-                return BadRequest(ex.Message);
-            }
+            //    return BadRequest(ex.Message);
+            //}
 
             return Ok(result);
 
@@ -68,9 +68,8 @@ namespace WebApi1.Controllers
         public IActionResult AddBook([FromBody] CreateBookModel newBook)
         {
             CreateBookCommand command = new CreateBookCommand(_context, _mapper);
-            try
-            {
-
+           
+            
                 command.Model = newBook;
                 CreateBookCommandValidator validator = new CreateBookCommandValidator();
                 validator.ValidateAndThrow(command);
@@ -87,12 +86,11 @@ namespace WebApi1.Controllers
                 //else
                 //{
                 //    command.Handle();
-                //}
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+                ////}
+            
+           
+                //return BadRequest(ex.Message);
+            
 
             return Ok();
         }
@@ -100,37 +98,37 @@ namespace WebApi1.Controllers
         [HttpPut]
         public IActionResult UpdateBook(int id, [FromBody] UpdateBookModel updatedBook)
         {
-            try
-            {
+            //try
+            //{
                 UpdateBookCommand command = new UpdateBookCommand(_context);
                 command.BookId = id;
                 command.Model = updatedBook;
                 UpdateBookCommandValidator validator = new UpdateBookCommandValidator();
                 validator.ValidateAndThrow(command);
                 command.handle();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
             return Ok();
         }
 
         [HttpDelete]
         public IActionResult DeleteBook(int id)
         {
-            try
-            {
+            //try
+            //{
                 DeleteBookCommand command = new DeleteBookCommand(_context);
                 command.BookId = id;
                 DeleteBookCommandValidator validationRules = new DeleteBookCommandValidator();
                 validationRules.ValidateAndThrow(command);
                 command.Handle();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
             return Ok();
         }
     }
