@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApi1.Entities;
 
 namespace WebApi1.DbOperations
 {
@@ -10,5 +11,6 @@ namespace WebApi1.DbOperations
 
         }
         public DbSet<Book> Books { get; set; }
+        public DbSet<Genre> Genres { get; set; }
     }
 }

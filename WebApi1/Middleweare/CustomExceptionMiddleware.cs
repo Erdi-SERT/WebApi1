@@ -5,15 +5,18 @@ using Microsoft.AspNetCore.Builder;
 using System.Diagnostics;
 using System.Net;
 using Newtonsoft.Json;
+using WebApi1.Services;
 
 namespace WebApi1.Middleweare
 {
     public class CustomExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        public CustomExceptionMiddleware(RequestDelegate next)
+        private readonly ILoggerService _loggerService;
+        public CustomExceptionMiddleware(RequestDelegate next,ILoggerService loggerService)
         {
             _next = next;
+            _loggerService = loggerService; 
         }
 
         public object JsonConvertor { get; private set; }
@@ -25,12 +28,12 @@ namespace WebApi1.Middleweare
             try
             {
                 string messgae = "[Request] HTTP " + context.Request.Method + "-" + context.Request.Path;
-                Console.WriteLine(messgae);
+                _loggerService.Write(messgae);
                 await _next(context);
 
                 watch.Stop();
                 messgae = "[Response] HTTP" + context.Request.Method + "-" + context.Request.Path + " responded " + context.Response.StatusCode + " in " + watch.Elapsed.TotalMilliseconds + "ms";
-                Console.WriteLine(messgae);
+                _loggerService.Write(messgae);
             }
             catch (Exception ex)
             {
@@ -44,7 +47,7 @@ namespace WebApi1.Middleweare
         private Task HandleException(HttpContext context, Exception ex, Stopwatch watch)
         {
             string message = "[Error]   HTTP" +context.Request.Method+"-"+context.Response.StatusCode+"Error Message:"+ex.Message+"in "+watch.Elapsed.TotalMilliseconds+"ms";
-            Console.WriteLine(message);
+            _loggerService.Write(message);
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             var result=JsonConvert.SerializeObject(new 

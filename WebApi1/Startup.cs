@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using WebApi1.DbOperations;
 using WebApi1.Middleweare;
+using WebApi1.Services;
 
 namespace WebApi1
 {
@@ -39,6 +40,7 @@ namespace WebApi1
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi", Version = "v1",Description="WebApi implement swagger"});
             });
             services.AddDbContext<BookStoreDbContext>(options => options.UseInMemoryDatabase(databaseName:"BookStoreDb"));
+            services.AddSingleton<ILoggerService, ConsoleLogger>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

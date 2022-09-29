@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebApi1
+namespace WebApi1.Entities
 {
     public class Book
     {
@@ -11,6 +11,8 @@ namespace WebApi1
 
         public string Title { get; set; }
         public int GenreId { get; set; }
+
+        public Genre Genre{ get; set; }
 
         public int PageCount { get; set; }
 
