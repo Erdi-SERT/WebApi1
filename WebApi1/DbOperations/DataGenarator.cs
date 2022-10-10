@@ -31,9 +31,29 @@ namespace WebApi1.DbOperations
                     {
                         Name = "Romance",
 
-                    }
+                    });
 
+                    context.Authors.AddRange(new Author
+                    {
+                        Name = "Halil",
+                        Surname = "İnancık",
+                        BirthDate = new DateTime(1916, 09, 06)
+                    },
+                    new Author
+                    {
+                        Name = "İlber",
+                        Surname = "Ortaylı",
+                        BirthDate = new DateTime(1947, 05, 21)
+                    },
+                    new Author 
+                    {
+                        Name="Fuat",
+                        Surname="Köprülü",
+                        BirthDate=new DateTime(1890,12,4)
+                    }
                     );
+
+
 
                     context.Books.AddRange(new Book
                     {

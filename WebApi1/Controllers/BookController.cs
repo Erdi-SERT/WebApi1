@@ -46,19 +46,12 @@ namespace WebApi1.Controllers
             BookDetailVmModel result = new BookDetailVmModel();
             //try
             //{
-                GetBookDetailQuery query = new GetBookDetailQuery(_context, _mapper);
-                query.BookId = id;
-                GetBookCommandValidator validator=new GetBookCommandValidator();
-                validator.ValidateAndThrow(query);
-                result = query.Handle();
+            GetBookDetailQuery query = new GetBookDetailQuery(_context, _mapper);
 
-            //}
-            //catch (Exception ex)
-            //{
-
-            //    return BadRequest(ex.Message);
-            //}
-
+            query.BookId = id;
+            GetBookCommandValidator validator = new GetBookCommandValidator();
+            validator.ValidateAndThrow(query);
+            result = query.Handle();
             return Ok(result);
 
 
@@ -68,67 +61,33 @@ namespace WebApi1.Controllers
         public IActionResult AddBook([FromBody] CreateBookModel newBook)
         {
             CreateBookCommand command = new CreateBookCommand(_context, _mapper);
-           
-            
-                command.Model = newBook;
-                CreateBookCommandValidator validator = new CreateBookCommandValidator();
-                validator.ValidateAndThrow(command);
-                command.Handle();
-                //ValidationResult result = validator.Validate(command);
-
-                //if (!result.IsValid)
-                //{
-                //    foreach (var item in result.Errors)
-                //    {
-                //        Console.WriteLine("Property " + item.PropertyName + " -Error Message: " + item.ErrorMessage);
-                //    }
-                //}
-                //else
-                //{
-                //    command.Handle();
-                ////}
-            
-           
-                //return BadRequest(ex.Message);
-            
-
+            command.Model = newBook;
+            CreateBookCommandValidator validator = new CreateBookCommandValidator();
+            validator.ValidateAndThrow(command);
+            command.Handle();
             return Ok();
         }
 
         [HttpPut]
         public IActionResult UpdateBook(int id, [FromBody] UpdateBookModel updatedBook)
         {
-            //try
-            //{
-                UpdateBookCommand command = new UpdateBookCommand(_context);
-                command.BookId = id;
-                command.Model = updatedBook;
-                UpdateBookCommandValidator validator = new UpdateBookCommandValidator();
-                validator.ValidateAndThrow(command);
-                command.handle();
-            //}
-            //catch (Exception ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
+            UpdateBookCommand command = new UpdateBookCommand(_context);
+            command.BookId = id;
+            command.Model = updatedBook;
+            UpdateBookCommandValidator validator = new UpdateBookCommandValidator();
+            validator.ValidateAndThrow(command);
+            command.handle();           
             return Ok();
         }
 
         [HttpDelete]
         public IActionResult DeleteBook(int id)
-        {
-            //try
-            //{
-                DeleteBookCommand command = new DeleteBookCommand(_context);
-                command.BookId = id;
-                DeleteBookCommandValidator validationRules = new DeleteBookCommandValidator();
-                validationRules.ValidateAndThrow(command);
-                command.Handle();
-            //}
-            //catch (Exception ex)
-            //{
-            //    return BadRequest(ex.Message);
-            //}
+        {            
+            DeleteBookCommand command = new DeleteBookCommand(_context);
+            command.BookId = id;
+            DeleteBookCommandValidator validationRules = new DeleteBookCommandValidator();
+            validationRules.ValidateAndThrow(command);
+            command.Handle();          
             return Ok();
         }
     }
