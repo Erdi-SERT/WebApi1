@@ -40,6 +40,8 @@ namespace WebApi1
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi", Version = "v1",Description="WebApi implement swagger"});
             });
             services.AddDbContext<BookStoreDbContext>(options => options.UseInMemoryDatabase(databaseName:"BookStoreDb"));
+            //Request life time da yaþar
+            services.AddScoped<IBookStoreDbContext>(provider => provider.GetService<BookStoreDbContext>());
             services.AddSingleton<ILoggerService, ConsoleLogger>();
         }
 
