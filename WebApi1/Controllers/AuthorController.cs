@@ -12,7 +12,9 @@ using static WebApi1.Application.AuthorOperations.Command.CreateBookCommand.Cret
 
 namespace WebApi1.Controllers
 {
-    public class AuthorController : Controller
+    [ApiController]
+    [Route("[controller]s")]
+    public class AuthorController : ControllerBase
     {
         private readonly IBookStoreDbContext _context;
         private readonly IMapper _mapper;
